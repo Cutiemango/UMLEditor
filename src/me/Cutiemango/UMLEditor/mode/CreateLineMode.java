@@ -1,5 +1,6 @@
 package me.Cutiemango.UMLEditor.mode;
 
+import me.Cutiemango.UMLEditor.UMLEditor;
 import me.Cutiemango.UMLEditor.objects.line.AssociationLine;
 import me.Cutiemango.UMLEditor.objects.line.CompositionLine;
 import me.Cutiemango.UMLEditor.objects.line.GeneralizationLine;
@@ -27,5 +28,7 @@ public class CreateLineMode extends ToolMode
 		} else if (line instanceof GeneralizationLine) {
 			System.out.println("GeneralizationLine");
 		}
+
+		UMLEditor.repaintCanvas();
 	}
 }

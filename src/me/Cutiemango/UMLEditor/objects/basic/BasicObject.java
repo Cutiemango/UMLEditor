@@ -21,32 +21,23 @@ public class BasicObject extends BaseObject
 	protected int width;
 	protected int height;
 
-	protected List<Pair<Integer, Integer>> portLocations = new ArrayList<>();
-
 	@Override
 	public void draw(Graphics g) {
-		drawPorts(g);
+		super.draw(g);
+		if (isSelected) {
+			drawPorts(g);
+		}
 		drawName(g);
 	}
 
-
 	public List<Pair<Integer, Integer>> getPortLocations() {
-		// lazy evaluation
-		if (portLocations.isEmpty()){
-			// upper
-			portLocations.add(new Pair<>(x + width / 2 - PORT_SIZE / 2, y - PORT_SIZE));
-			// right
-			portLocations.add(new Pair<>(x + width, y + height / 2 - PORT_SIZE / 2));
-			// lower
-			portLocations.add(new Pair<>(x + width / 2 - PORT_SIZE / 2, y + height));
-			// left
-			portLocations.add(new Pair<>(x - PORT_SIZE, y + height / 2 - PORT_SIZE / 2));
-		}
-		return portLocations;
+		// upper, right, lower, left
+		return List.of(new Pair<>(x + width / 2 - PORT_SIZE / 2, y - PORT_SIZE), new Pair<>(x + width, y + height / 2 - PORT_SIZE / 2),
+				new Pair<>(x + width / 2 - PORT_SIZE / 2, y + height), new Pair<>(x - PORT_SIZE, y + height / 2 - PORT_SIZE / 2));
 	}
 
 	private void drawPorts(Graphics g) {
-		for (Pair<Integer, Integer> pair : portLocations) {
+		for (Pair<Integer, Integer> pair : getPortLocations()) {
 			g.fillRect(pair.getKey(), pair.getValue(), PORT_SIZE, PORT_SIZE);
 		}
 	}

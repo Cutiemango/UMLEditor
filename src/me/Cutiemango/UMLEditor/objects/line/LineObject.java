@@ -3,6 +3,7 @@ package me.Cutiemango.UMLEditor.objects.line;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class LineObject extends BaseObject
 {
@@ -20,8 +21,27 @@ public class LineObject extends BaseObject
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawLine(x, y, hx, hy);
 		decorateHead(g);
+	}
+
+	public Point getHead() {
+		return new Point(hx, hy);
+	}
+
+	public Point getTail() {
+		return new Point(x, y);
+	}
+
+	public void setHead(int x, int y) {
+		this.hx = x;
+		this.hy = y;
+	}
+
+	public void setTail(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	// either head (arrow side) or tail

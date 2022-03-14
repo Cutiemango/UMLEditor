@@ -16,6 +16,17 @@ public class UseCaseObject extends BasicObject
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawOval(x, y, width, height);
+	}
+
+	@Override
+	public boolean isWithin(int x, int y) {
+		// check if x and y is inside ellipse
+		int rx = this.width / 2;
+		int ry = this.height / 2;
+		double h = this.x + rx;
+		double k = this.y + ry;
+		return (x - h) * (x - h) / (rx * rx) + (y - k) * (y - k) / (ry * ry) <= 1;
 	}
 }

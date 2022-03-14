@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 
 import static me.Cutiemango.UMLEditor.ConfigSettings.BUTTON_SELECTED_COLOR;
 
@@ -56,9 +57,10 @@ public class UMLToolBar
 				// reset button color
 				selectedButton.setBackground(new Color(0, 0, 0));
 			}
-			selectedButton = (JButton) e.getSource();
+			selectedButton = button;
 			selectedButton.setBackground(BUTTON_SELECTED_COLOR);
-			UMLEditor.switchMode(mode);
+			UMLEditor.switchToMode(mode);
+			UMLEditor.repaintCanvas();
 		});
 		return button;
 	}

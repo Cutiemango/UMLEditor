@@ -62,20 +62,31 @@ public class UMLEditor
 	}
 
 	public static void setSelectedObject(BaseObject object) {
-		instance.selectedObject = object;
+		clearSelectedObject();
+		System.out.println("Selected object: " + object);
+		if (object != null) {
+			object.setSelected(true);
+			instance.selectedObject = object;
+		}
+	}
+
+	public static void clearSelectedObject() {
+		if (instance.selectedObject != null) {
+			instance.selectedObject.setSelected(false);
+		}
+		instance.selectedObject = null;
 	}
 
 	public static ToolMode getCurrentMode() {
 		return instance.currentMode;
 	}
 
-	public static void switchMode(ToolMode mode) {
-		instance.app.removeMouseListener(instance.currentMode);
-		instance.app.removeMouseMotionListener(instance.currentMode);
-		instance.currentMode = mode;
-		instance.app.addMouseListener(mode);
-		instance.app.addMouseMotionListener(mode);
+	public static void switchToMode(ToolMode newMode) {
+		instance.canvas.switchMode(instance.currentMode, newMode);
+		instance.currentMode = newMode;
+	}
 
+	public static void repaintCanvas() {
 		instance.canvas.repaint();
 	}
 

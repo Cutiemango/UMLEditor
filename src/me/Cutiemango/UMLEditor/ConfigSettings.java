@@ -6,7 +6,7 @@ import java.awt.Font;
 public class ConfigSettings
 {
 	public static final String DEFAULT_OBJECT_NAME = "Object";
-	public static final Font DEFAULT_FONT = new Font("Consolas", Font.PLAIN, 12);
+	public static final Font DEFAULT_FONT = new Font("Consolas", Font.PLAIN, 14);
 
 	public static final int PORT_SIZE = 10;
 
@@ -16,5 +16,6 @@ public class ConfigSettings
 	public static final int USECASE_HEIGHT = 90;
 	public static final int USECASE_WIDTH = 120;
 
-	public static final Color BUTTON_SELECTED_COLOR = new Color(0X3772cd);
+	public static final Color BUTTON_SELECTED_COLOR = new Color(0x3772cd);
+	public static final Color OBJECT_SELECTED_COLOR = new Color(0x3772cd);
 }

@@ -1,6 +1,7 @@
 package me.Cutiemango.UMLEditor.components;
 
 import me.Cutiemango.UMLEditor.UMLEditor;
+import me.Cutiemango.UMLEditor.mode.ToolMode;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
 
 import javax.swing.JPanel;
@@ -9,9 +10,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class UMLCanvas
 {
@@ -25,6 +25,14 @@ public class UMLCanvas
 
 	public JPanel getCanvas() {
 		return canvas;
+	}
+
+	public void switchMode(ToolMode prevMode, ToolMode newMode) {
+		canvas.removeMouseListener(prevMode);
+		canvas.removeMouseMotionListener(prevMode);
+
+		canvas.addMouseListener(newMode);
+		canvas.addMouseMotionListener(newMode);
 	}
 
 	public void draw(Graphics g) {
