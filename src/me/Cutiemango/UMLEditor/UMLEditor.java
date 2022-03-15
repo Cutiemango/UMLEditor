@@ -5,12 +5,16 @@ import me.Cutiemango.UMLEditor.components.UMLMenuBar;
 import me.Cutiemango.UMLEditor.components.UMLToolBar;
 import me.Cutiemango.UMLEditor.mode.ToolMode;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
+import me.Cutiemango.UMLEditor.objects.Port;
+import me.Cutiemango.UMLEditor.objects.basic.BasicObject;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +79,13 @@ public class UMLEditor
 			instance.selectedObject.setSelected(false);
 		}
 		instance.selectedObject = null;
+	}
+
+	// find the nearest port location with respect to (x, y)
+	public static Optional<Port> findPort(int x, int y) {
+		return instance.objects.stream().filter(o -> o instanceof BasicObject && o.isWithin(x, y))
+				.map(o -> ((BasicObject) o).getPorts()).flatMap(Collection::stream)
+				.min(Comparator.comparingInt(port -> (port.getX() - x) * (port.getX() - x) + (port.getY() - y) * (port.getY() - y)));
 	}
 
 	public static ToolMode getCurrentMode() {

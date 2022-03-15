@@ -8,9 +8,11 @@ import static me.Cutiemango.UMLEditor.ConfigSettings.CLASS_WIDTH;
 public class ClassObject extends BasicObject
 {
 	public ClassObject(int x, int y) {
-		super(x, y);
-		this.width = CLASS_WIDTH;
-		this.height = CLASS_HEIGHT;
+		this(x, y, CLASS_WIDTH, CLASS_HEIGHT);
+	}
+
+	private ClassObject(int x, int y, int width, int height) {
+		super(x, y, width, height);
 		this.iconPath = "/assets/class.png";
 	}
 

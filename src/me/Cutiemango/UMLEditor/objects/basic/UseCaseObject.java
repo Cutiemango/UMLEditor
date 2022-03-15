@@ -8,9 +8,11 @@ import static me.Cutiemango.UMLEditor.ConfigSettings.USECASE_WIDTH;
 public class UseCaseObject extends BasicObject
 {
 	public UseCaseObject(int x, int y) {
-		super(x, y);
-		this.width = USECASE_WIDTH;
-		this.height = USECASE_HEIGHT;
+		this(x, y, USECASE_WIDTH, USECASE_HEIGHT);
+	}
+
+	private UseCaseObject(int x, int y, int width, int height) {
+		super(x, y, width, height);
 		this.iconPath = "/assets/usecase.png";
 	}
 
