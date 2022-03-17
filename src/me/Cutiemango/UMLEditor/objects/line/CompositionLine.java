@@ -10,6 +10,11 @@ public class CompositionLine extends LineObject
 	}
 
 	@Override
+	public LineObject createObject(int x, int y, int hx, int hy) {
+		return new CompositionLine(x, y, hx, hy);
+	}
+
+	@Override
 	public void decorateHead(Graphics g) {
 
 	}

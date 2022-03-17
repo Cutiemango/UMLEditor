@@ -33,6 +33,10 @@ public class BasicObject extends BaseObject
 
 	protected List<Port> ports = new ArrayList<>();
 
+	public BasicObject createObject(int x, int y) {
+		throw new IllegalStateException("This method should be overridden!");
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);

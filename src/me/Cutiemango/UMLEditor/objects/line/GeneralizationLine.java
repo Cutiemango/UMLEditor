@@ -10,6 +10,11 @@ public class GeneralizationLine extends LineObject
 	}
 
 	@Override
+	public LineObject createObject(int x, int y, int hx, int hy) {
+		return new GeneralizationLine(x, y, hx, hy);
+	}
+
+	@Override
 	public void decorateHead(Graphics g) {
 
 	}

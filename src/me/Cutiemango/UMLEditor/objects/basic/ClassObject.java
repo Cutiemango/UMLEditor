@@ -17,6 +17,11 @@ public class ClassObject extends BasicObject
 	}
 
 	@Override
+	public BasicObject createObject(int x, int y) {
+		return new ClassObject(x, y);
+	}
+
+	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
 		g.drawRect(x, y, width, height);

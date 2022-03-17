@@ -17,6 +17,11 @@ public class UseCaseObject extends BasicObject
 	}
 
 	@Override
+	public BasicObject createObject(int x, int y) {
+		return new UseCaseObject(x, y);
+	}
+
+	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
 		g.drawOval(x, y, width, height);

@@ -1,5 +1,7 @@
 package me.Cutiemango.UMLEditor.objects;
 
+import me.Cutiemango.UMLEditor.UMLEditor;
+
 import java.awt.Color;
 import java.awt.Graphics;
 

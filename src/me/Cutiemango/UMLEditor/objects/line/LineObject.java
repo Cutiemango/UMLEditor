@@ -1,5 +1,6 @@
 package me.Cutiemango.UMLEditor.objects.line;
 
+import me.Cutiemango.UMLEditor.UMLEditor;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
 import me.Cutiemango.UMLEditor.objects.Port;
 
@@ -23,6 +24,10 @@ public class LineObject extends BaseObject
 	protected boolean isSelectingTail = true;
 
 	public void decorateHead(Graphics g) {}
+
+	public LineObject createObject(int x, int y, int hx, int hy) {
+		throw new IllegalStateException("This method should be overridden!");
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -51,14 +56,6 @@ public class LineObject extends BaseObject
 
 	public Port getOtherPort() {
 		return isSelectingTail ? getHead() : getTail();
-	}
-
-	public void setHead(Port other) {
-		ports.set(1, other);
-	}
-
-	public void setTail(Port other) {
-		ports.set(0, other);
 	}
 
 	@Override

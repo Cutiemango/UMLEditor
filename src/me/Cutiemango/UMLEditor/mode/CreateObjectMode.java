@@ -9,25 +9,19 @@ import java.awt.event.MouseEvent;
 
 public class CreateObjectMode extends ToolMode
 {
-	public CreateObjectMode(BasicObject object) {
-		this.object = object;
-		this.iconPath = object.getIconPath();
+	public CreateObjectMode(BasicObject objRef) {
+		this.objRef = objRef;
+		this.iconPath = objRef.getIconPath();
 	}
 
-	private final BasicObject object;
+	private final BasicObject objRef;
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		System.out.println("CreateObjectMode: mousePressed");
 
-		if (object instanceof ClassObject) {
-			UMLEditor.addObject(new ClassObject(e.getX(), e.getY()));
-			System.out.println("ClassObject");
-		} else if (object instanceof UseCaseObject) {
-			UMLEditor.addObject(new UseCaseObject(e.getX(), e.getY()));
-			System.out.println("UseCaseObject");
-		}
-
+		BasicObject obj = objRef.createObject(e.getX(), e.getY());
+		UMLEditor.addObject(obj);
 		UMLEditor.repaintCanvas();
 	}
 }
