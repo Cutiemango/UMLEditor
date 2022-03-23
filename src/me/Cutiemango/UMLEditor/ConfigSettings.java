@@ -18,4 +18,5 @@ public class ConfigSettings
 
 	public static final Color BUTTON_SELECTED_COLOR = new Color(0x3772cd);
 	public static final Color OBJECT_SELECTED_COLOR = new Color(0x3772cd);
+	public static final Color GROUP_SELECTED_COLOR = new Color(145 / 255f, 185 / 255f, 241 / 255f, 0.2f);
 }

@@ -33,7 +33,7 @@ public class UMLEditor
 	private BaseObject selectedObject = null;
 	private ToolMode currentMode = null;
 
-	public void run() {
+	public void start() {
 		app.setLayout(new BorderLayout());
 		app.add(menuBar.getMenuBar(), BorderLayout.NORTH);
 		app.add(toolBar.getToolBar(), BorderLayout.WEST);
@@ -47,6 +47,10 @@ public class UMLEditor
 
 	public static UMLEditor getInstance() {
 		return instance;
+	}
+
+	public static UMLCanvas getCanvas() {
+		return instance.canvas;
 	}
 
 	public static List<BaseObject> getObjects() {
@@ -97,15 +101,7 @@ public class UMLEditor
 		instance.currentMode = newMode;
 	}
 
-	public static void repaintCanvas() {
-		instance.canvas.repaint();
-	}
-
 	public static URL getResource(String name) {
 		return UMLEditor.class.getResource(name);
-	}
-
-	public static InputStream getResourceAsStream(String name) {
-		return UMLEditor.class.getResourceAsStream(name);
 	}
 }

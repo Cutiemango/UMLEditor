@@ -4,6 +4,7 @@ import me.Cutiemango.UMLEditor.UMLEditor;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import static me.Cutiemango.UMLEditor.ConfigSettings.OBJECT_SELECTED_COLOR;
 
@@ -38,6 +39,7 @@ public class BaseObject
 	public int getY() {
 		return y;
 	}
+
 
 	public String getIconPath() {
 		return iconPath;

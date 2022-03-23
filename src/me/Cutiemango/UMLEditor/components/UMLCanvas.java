@@ -10,8 +10,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+
+import static me.Cutiemango.UMLEditor.ConfigSettings.GROUP_SELECTED_COLOR;
 
 public class UMLCanvas
 {
@@ -22,6 +22,9 @@ public class UMLCanvas
 			draw(g);
 		}
 	};
+
+	private int dragStartX, dragStartY, dragWidth, dragHeight;
+	private boolean showArea = false;
 
 	public JPanel getCanvas() {
 		return canvas;
@@ -36,16 +39,22 @@ public class UMLCanvas
 	}
 
 	public void draw(Graphics g) {
-		Dimension size = canvas.getSize();
-		g.setColor(new Color(0x202020));
-		g.fillRect(0, 0, size.width, size.height);
-
 		Graphics2D g2d = (Graphics2D) g;
+		Dimension size = canvas.getSize();
+
+		g2d.setColor(new Color(0x202020));
+		g2d.fillRect(0, 0, size.width, size.height);
+
 		g2d.setColor(new Color(0xffffff));
 		g2d.setStroke(new BasicStroke(1));
 
 		for (BaseObject object : UMLEditor.getObjects()) {
 			object.draw(g2d);
+		}
+
+		if (showArea) {
+			g2d.setColor(GROUP_SELECTED_COLOR);
+			g2d.fillRect(dragStartX, dragStartY, dragWidth, dragHeight);
 		}
 	}
 
@@ -53,4 +62,16 @@ public class UMLCanvas
 		canvas.repaint();
 	}
 
+
+
+	public void setSelectedArea(int x, int y, int width, int height) {
+		this.dragStartX = x;
+		this.dragStartY = y;
+		this.dragWidth = width;
+		this.dragHeight = height;
+	}
+
+	public void setShowArea(boolean showArea) {
+		this.showArea = showArea;
+	}
 }

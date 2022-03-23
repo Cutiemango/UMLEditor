@@ -23,7 +23,7 @@ public class CreateLineMode extends ToolMode
 			UMLEditor.addObject(line);
 			UMLEditor.setSelectedObject(line);
 		});
-		UMLEditor.repaintCanvas();
+		UMLEditor.getCanvas().repaint();
 	}
 
 	@Override
@@ -31,13 +31,14 @@ public class CreateLineMode extends ToolMode
 		System.out.println("CreateLineMode: mouseReleased");
 		UMLEditor.getSelectedObject().filter(o -> o instanceof LineObject).ifPresent(o -> {
 			LineObject line = (LineObject) o;
-			UMLEditor.findPort(e.getX(), e.getY()).filter(port -> line.getTail().getConnectedObject() != port.getParent())
-					.ifPresentOrElse(port -> line.getHead().connect(port), () -> {
-						UMLEditor.removeObject(line);
-						UMLEditor.clearSelectedObject();
-					});
+			UMLEditor.findPort(e.getX(), e.getY())
+					 .filter(port -> line.getTail().getConnectedObject() != port.getParent())
+					 .ifPresentOrElse(port -> line.getHead().connect(port), () -> {
+						 UMLEditor.removeObject(line);
+						 UMLEditor.clearSelectedObject();
+					 });
 		});
-		UMLEditor.repaintCanvas();
+		UMLEditor.getCanvas().repaint();
 	}
 
 	@Override
@@ -46,6 +47,6 @@ public class CreateLineMode extends ToolMode
 			LineObject line = (LineObject) o;
 			line.getHead().moveTo(e.getX(), e.getY());
 		});
-		UMLEditor.repaintCanvas();
+		UMLEditor.getCanvas().repaint();
 	}
 }
