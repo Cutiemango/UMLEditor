@@ -1,8 +1,12 @@
 package me.Cutiemango.UMLEditor.components;
 
+import me.Cutiemango.UMLEditor.UMLEditor;
+import me.Cutiemango.UMLEditor.objects.basic.BasicObject;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class UMLMenuBar
 {
@@ -11,6 +15,7 @@ public class UMLMenuBar
 
 		final JMenu editMenu = new JMenu("Edit");
 		final JMenuItem menuItem = new JMenuItem("Change Object Name");
+		menuItem.addActionListener(e -> handleChangeObjectName());
 		editMenu.add(menuItem);
 
 		final JMenuItem groupItem = new JMenuItem("Group");
@@ -27,6 +32,17 @@ public class UMLMenuBar
 
 	public JMenuBar getMenuBar() {
 		return menuBar;
+	}
+
+	private void handleChangeObjectName() {
+		UMLEditor.getSelectedObject().filter(o -> o instanceof BasicObject).ifPresentOrElse(o -> {
+			BasicObject obj = (BasicObject) o;
+			String name = JOptionPane.showInputDialog("Enter new object name", obj.getObjectName());
+			if (name != null) {
+				obj.setObjectName(name);
+				UMLEditor.getCanvas().repaint();
+			}
+		}, () -> JOptionPane.showMessageDialog(null, "No object selected!", "Error", JOptionPane.ERROR_MESSAGE));
 	}
 
 }

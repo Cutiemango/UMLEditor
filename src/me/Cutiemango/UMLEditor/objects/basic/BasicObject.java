@@ -37,6 +37,14 @@ public class BasicObject extends BaseObject
 		throw new IllegalStateException("This method should be overridden!");
 	}
 
+	public String getObjectName() {
+		return objectName;
+	}
+
+	public void setObjectName(String name) {
+		this.objectName = name;
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);

@@ -92,10 +92,6 @@ public class UMLEditor
 				.min(Comparator.comparingInt(port -> (port.getX() - x) * (port.getX() - x) + (port.getY() - y) * (port.getY() - y)));
 	}
 
-	public static ToolMode getCurrentMode() {
-		return instance.currentMode;
-	}
-
 	public static void switchToMode(ToolMode newMode) {
 		instance.canvas.switchMode(instance.currentMode, newMode);
 		instance.currentMode = newMode;
