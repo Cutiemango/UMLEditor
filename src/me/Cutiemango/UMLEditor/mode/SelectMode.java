@@ -5,10 +5,12 @@ import me.Cutiemango.UMLEditor.objects.line.LineObject;
 
 import java.awt.event.MouseEvent;
 
+import static me.Cutiemango.UMLEditor.ConfigSettings.SELECTED_AREA_THRESHOLD;
+
 public class SelectMode extends ToolMode
 {
-	public SelectMode() {
-		this.iconPath = "/assets/select.png";
+	public SelectMode(String iconPath) {
+		this.iconPath = iconPath;
 	}
 
 	private int dragOffsetX, dragOffsetY;
@@ -17,12 +19,13 @@ public class SelectMode extends ToolMode
 	@Override
 	public void mousePressed(MouseEvent e) {
 		System.out.println("SelectMode: mousePressed");
+		UMLEditor.getCanvas().setShowArea(false);
 
 		// find the last (topmost) element under the mouse and select it
-		UMLEditor.getObjects().stream().filter(obj -> obj.isWithin(e.getX(), e.getY()))
+		UMLEditor.getObjects().stream().filter(obj -> obj.includesPoint(e.getX(), e.getY()))
 				 .reduce((first, second) -> second).ifPresentOrElse(obj -> {
 					 if (obj instanceof LineObject line) {
-						 line.setSelectingTail(line.getTail().isWithin(e.getX(), e.getY()));
+						 line.setSelectingTail(line.getTail().includePoint(e.getX(), e.getY()));
 						 dragStartX = line.getSelectingPort().getX();
 						 dragStartY = line.getSelectingPort().getY();
 					 } else {
@@ -33,8 +36,7 @@ public class SelectMode extends ToolMode
 					 dragOffsetY = e.getY() - dragStartY;
 					 UMLEditor.setSelectedObject(obj);
 				 }, () -> {
-					 UMLEditor.clearSelectedObject();
-					 UMLEditor.getCanvas().setShowArea(false);
+					 UMLEditor.resetSelection();
 					 dragStartX = e.getX();
 					 dragStartY = e.getY();
 				 });
@@ -66,8 +68,13 @@ public class SelectMode extends ToolMode
 					 int y = Math.min(e.getY(), dragStartY);
 					 int width = Math.abs(e.getX() - dragStartX);
 					 int height = Math.abs(e.getY() - dragStartY);
-					 UMLEditor.getCanvas().setShowArea(true);
-					 UMLEditor.getCanvas().setSelectedArea(x, y, width, height);
+					 if (width * height > SELECTED_AREA_THRESHOLD) {
+						 UMLEditor.getCanvas().setShowArea(true);
+						 UMLEditor.getCanvas().setSelectedArea(x, y, width, height);
+
+						 UMLEditor.resetSelection();
+						 UMLEditor.getCanvas().getObjectsInArea().forEach(obj -> obj.setSelected(true));
+					 }
 				 });
 
 		UMLEditor.getCanvas().repaint();

@@ -6,7 +6,6 @@ public class AssociationLine extends LineObject
 {
 	public AssociationLine(int x, int y, int hx, int hy) {
 		super(x, y, hx, hy);
-		this.iconPath = "/assets/association.png";
 	}
 
 	@Override
@@ -17,5 +16,10 @@ public class AssociationLine extends LineObject
 	@Override
 	public void decorateHead(Graphics g) {
 
+	}
+
+	@Override
+	public String toString() {
+		return "AssociationLine [x=" + x + ", y=" + y + "]";
 	}
 }

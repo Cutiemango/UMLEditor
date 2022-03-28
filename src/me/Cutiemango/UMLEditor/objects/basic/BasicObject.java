@@ -1,11 +1,10 @@
 package me.Cutiemango.UMLEditor.objects.basic;
 
-import me.Cutiemango.UMLEditor.Pair;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
+import me.Cutiemango.UMLEditor.objects.GroupedObject;
 import me.Cutiemango.UMLEditor.objects.Port;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class BasicObject extends BaseObject
 		ports.add(new Port(x - PORT_SIZE, y + height / 2 - PORT_SIZE / 2, this));
 	}
 
+	protected boolean isGrouped = false;
 	protected String objectName = DEFAULT_OBJECT_NAME;
 	protected int width;
 	protected int height;
@@ -45,6 +45,22 @@ public class BasicObject extends BaseObject
 		this.objectName = name;
 	}
 
+	public int getDiagonalX() {
+		return x + width;
+	}
+
+	public int getDiagonalY() {
+		return y + height;
+	}
+
+	public boolean isGrouped() {
+		return isGrouped;
+	}
+
+	public void setGrouped(boolean grouped) {
+		isGrouped = grouped;
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
@@ -59,10 +75,11 @@ public class BasicObject extends BaseObject
 	@Override
 	public void moveTo(int x, int y) {
 		int dx = x - this.x, dy = y - this.y;
-		super.moveTo(x, y);
 		for (Port port : ports) {
 			port.moveTo(port.getX() + dx, port.getY() + dy);
 		}
+
+		super.moveTo(x, y);
 	}
 
 	public List<Port> getPorts() {
@@ -70,9 +87,11 @@ public class BasicObject extends BaseObject
 	}
 
 	private void drawName(Graphics g) {
-		int stringWidth = g.getFontMetrics(DEFAULT_FONT).stringWidth(objectName);
-		g.setFont(DEFAULT_FONT);
-		g.drawString(objectName, x + (width - stringWidth) / 2, y + 25);
+		if (objectName != null) {
+			int stringWidth = g.getFontMetrics(DEFAULT_FONT).stringWidth(objectName);
+			g.setFont(DEFAULT_FONT);
+			g.drawString(objectName, x + (width - stringWidth) / 2, y + 25);
+		}
 	}
 
 }

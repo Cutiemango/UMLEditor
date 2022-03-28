@@ -1,11 +1,9 @@
 package me.Cutiemango.UMLEditor.objects.line;
 
-import me.Cutiemango.UMLEditor.UMLEditor;
 import me.Cutiemango.UMLEditor.objects.BaseObject;
 import me.Cutiemango.UMLEditor.objects.Port;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,9 @@ public class LineObject extends BaseObject
 	protected List<Port> ports = new ArrayList<>();
 	protected boolean isSelectingTail = true;
 
-	public void decorateHead(Graphics g) {}
+	public void decorateHead(Graphics g) {
+		// left for subclasses
+	}
 
 	public LineObject createObject(int x, int y, int hx, int hy) {
 		throw new IllegalStateException("This method should be overridden!");
@@ -33,13 +33,14 @@ public class LineObject extends BaseObject
 	public void draw(Graphics g) {
 		super.draw(g);
 		Port head = getHead(), tail = getTail();
-		g.drawLine(head.getX() + PORT_SIZE / 2, head.getY() + PORT_SIZE / 2, tail.getX() + PORT_SIZE / 2, tail.getY() + PORT_SIZE / 2);
+		g.drawLine(head.getX() + PORT_SIZE / 2, head.getY() + PORT_SIZE / 2, tail.getX() + PORT_SIZE / 2,
+				   tail.getY() + PORT_SIZE / 2);
 		decorateHead(g);
 	}
 
 	@Override
-	public boolean isWithin(int x, int y) {
-		return getHead().isWithin(x, y) || getTail().isWithin(x, y);
+	public boolean includesPoint(int x, int y) {
+		return getHead().includePoint(x, y) || getTail().includePoint(x, y);
 	}
 
 	public Port getHead() {
@@ -66,6 +67,11 @@ public class LineObject extends BaseObject
 		} else {
 			getHead().moveTo(x, y);
 		}
+	}
+
+	@Override
+	public boolean isWithinArea(int x, int y, int width, int height) {
+		return getHead().isWithinArea(x, y, width, height) && getTail().isWithinArea(x, y, width, height);
 	}
 
 	// either head (arrow side) or tail

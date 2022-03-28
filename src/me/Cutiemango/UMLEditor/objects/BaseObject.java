@@ -1,11 +1,8 @@
 package me.Cutiemango.UMLEditor.objects;
 
-import me.Cutiemango.UMLEditor.UMLEditor;
-
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
+import static me.Cutiemango.UMLEditor.ConfigSettings.DEFAULT_OBJECT_COLOR;
 import static me.Cutiemango.UMLEditor.ConfigSettings.OBJECT_SELECTED_COLOR;
 
 public class BaseObject
@@ -17,18 +14,21 @@ public class BaseObject
 
 	// abstract coordinate of the object
 	protected int x, y;
-	protected String iconPath;
 	protected boolean isSelected = false;
 
 	public void draw(Graphics g) {
 		if (isSelected) {
 			g.setColor(OBJECT_SELECTED_COLOR);
 		} else {
-			g.setColor(new Color(0xffffff));
+			g.setColor(DEFAULT_OBJECT_COLOR);
 		}
 	}
 
-	public boolean isWithin(int x, int y) {
+	public boolean includesPoint(int x, int y) {
+		return false; // implementation is left to the subclasses
+	}
+
+	public boolean isWithinArea(int x, int y, int width, int height) {
 		return false; // implementation is left to the subclasses
 	}
 
@@ -40,26 +40,17 @@ public class BaseObject
 		return y;
 	}
 
-
-	public String getIconPath() {
-		return iconPath;
-	}
-
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public boolean isSelected() {
-		return isSelected;
-	}
-
 	public void setSelected(boolean selected) {
-		isSelected = selected;
+		this.isSelected = selected;
 	}
 
 	@Override
 	public String toString() {
-		return "BaseObject [x=" + x + ", y=" + y + ", iconPath=" + iconPath + "]";
+		return "BaseObject [x=" + x + ", y=" + y + "]";
 	}
 }

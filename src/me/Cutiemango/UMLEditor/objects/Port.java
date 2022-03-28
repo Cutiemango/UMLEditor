@@ -29,6 +29,14 @@ public class Port
 		return y;
 	}
 
+	public int getDiagonalX() {
+		return x + PORT_SIZE;
+	}
+
+	public int getDiagonalY() {
+		return y + PORT_SIZE;
+	}
+
 	public void draw(Graphics g) {
 		g.fillRect(x, y, PORT_SIZE, PORT_SIZE);
 	}
@@ -41,8 +49,12 @@ public class Port
 		}
 	}
 
-	public boolean isWithin(int x, int y) {
+	public boolean includePoint(int x, int y) {
 		return x >= this.x && x <= this.x + PORT_SIZE && y >= this.y && y <= this.y + PORT_SIZE;
+	}
+
+	public boolean isWithinArea(int x, int y, int width, int height) {
+		return x <= this.x && this.x <= x + width && y <= this.y && this.y <= y + height;
 	}
 
 	public BaseObject getParent() {

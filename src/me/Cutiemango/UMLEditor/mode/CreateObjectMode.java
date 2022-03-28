@@ -9,9 +9,9 @@ import java.awt.event.MouseEvent;
 
 public class CreateObjectMode extends ToolMode
 {
-	public CreateObjectMode(BasicObject objRef) {
+	public CreateObjectMode(String iconPath, BasicObject objRef) {
+		this.iconPath = iconPath;
 		this.objRef = objRef;
-		this.iconPath = objRef.getIconPath();
 	}
 
 	private final BasicObject objRef;

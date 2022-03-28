@@ -10,7 +10,6 @@ import me.Cutiemango.UMLEditor.objects.basic.BasicObject;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,7 +69,7 @@ public class UMLEditor
 	}
 
 	public static void setSelectedObject(BaseObject object) {
-		clearSelectedObject();
+		resetSelection();
 		System.out.println("Selected object: " + object);
 		if (object != null) {
 			object.setSelected(true);
@@ -78,7 +77,8 @@ public class UMLEditor
 		}
 	}
 
-	public static void clearSelectedObject() {
+	public static void resetSelection() {
+		instance.objects.forEach(obj -> obj.setSelected(false));
 		if (instance.selectedObject != null) {
 			instance.selectedObject.setSelected(false);
 		}
@@ -87,7 +87,7 @@ public class UMLEditor
 
 	// find the nearest port location with respect to (x, y)
 	public static Optional<Port> findPort(int x, int y) {
-		return instance.objects.stream().filter(o -> o instanceof BasicObject && o.isWithin(x, y))
+		return instance.objects.stream().filter(o -> o instanceof BasicObject && o.includesPoint(x, y))
 				.map(o -> ((BasicObject) o).getPorts()).flatMap(Collection::stream)
 				.min(Comparator.comparingInt(port -> (port.getX() - x) * (port.getX() - x) + (port.getY() - y) * (port.getY() - y)));
 	}

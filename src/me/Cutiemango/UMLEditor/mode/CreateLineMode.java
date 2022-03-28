@@ -7,9 +7,9 @@ import java.awt.event.MouseEvent;
 
 public class CreateLineMode extends ToolMode
 {
-	public CreateLineMode(LineObject objRef) {
+	public CreateLineMode(String iconPath, LineObject objRef) {
+		this.iconPath = iconPath;
 		this.objRef = objRef;
-		this.iconPath = objRef.getIconPath();
 	}
 
 	private final LineObject objRef;
@@ -35,7 +35,7 @@ public class CreateLineMode extends ToolMode
 					 .filter(port -> line.getTail().getConnectedObject() != port.getParent())
 					 .ifPresentOrElse(port -> line.getHead().connect(port), () -> {
 						 UMLEditor.removeObject(line);
-						 UMLEditor.clearSelectedObject();
+						 UMLEditor.resetSelection();
 					 });
 		});
 		UMLEditor.getCanvas().repaint();
