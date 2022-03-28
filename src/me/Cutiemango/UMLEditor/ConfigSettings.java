@@ -9,6 +9,7 @@ public class ConfigSettings
 	public static final Font DEFAULT_FONT = new Font("Consolas", Font.PLAIN, 14);
 
 	public static final int PORT_SIZE = 10;
+	public static final int ARROW_SIZE = 10;
 
 	public static final int CLASS_OBJECT_HEIGHT = 120;
 	public static final int CLASS_OBJECT_WIDTH = 100;
