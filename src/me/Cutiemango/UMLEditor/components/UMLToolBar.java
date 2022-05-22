@@ -60,7 +60,7 @@ public class UMLToolBar
 			}
 			selectedButton = button;
 			selectedButton.setBackground(BUTTON_SELECTED_COLOR);
-			UMLEditor.switchToMode(mode);
+			UMLEditor.getCanvas().switchMode(mode);
 			UMLEditor.getCanvas().repaint();
 		});
 		return button;

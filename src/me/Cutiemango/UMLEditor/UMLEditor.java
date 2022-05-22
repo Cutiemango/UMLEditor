@@ -28,10 +28,6 @@ public class UMLEditor
 	private final UMLMenuBar menuBar = new UMLMenuBar();
 	private final UMLToolBar toolBar = new UMLToolBar();
 
-	private final List<BaseObject> objects = new ArrayList<>();
-	private BaseObject selectedObject = null;
-	private ToolMode currentMode = null;
-
 	public void start() {
 		app.setLayout(new BorderLayout());
 		app.add(menuBar.getMenuBar(), BorderLayout.NORTH);
@@ -50,51 +46,6 @@ public class UMLEditor
 
 	public static UMLCanvas getCanvas() {
 		return instance.canvas;
-	}
-
-	public static List<BaseObject> getObjects() {
-		return instance.objects;
-	}
-
-	public static void addObject(BaseObject object) {
-		instance.objects.add(object);
-	}
-
-	public static void removeObject(BaseObject object) {
-		instance.objects.remove(object);
-	}
-
-	public static Optional<BaseObject> getSelectedObject() {
-		return Optional.ofNullable(instance.selectedObject);
-	}
-
-	public static void setSelectedObject(BaseObject object) {
-		resetSelection();
-		System.out.println("Selected object: " + object);
-		if (object != null) {
-			object.setSelected(true);
-			instance.selectedObject = object;
-		}
-	}
-
-	public static void resetSelection() {
-		instance.objects.forEach(obj -> obj.setSelected(false));
-		if (instance.selectedObject != null) {
-			instance.selectedObject.setSelected(false);
-		}
-		instance.selectedObject = null;
-	}
-
-	// find the nearest port location with respect to (x, y)
-	public static Optional<Port> findPort(int x, int y) {
-		return instance.objects.stream().filter(o -> o instanceof BasicObject && o.includesPoint(x, y))
-				.map(o -> ((BasicObject) o).getPorts()).flatMap(Collection::stream)
-				.min(Comparator.comparingInt(port -> (port.getX() - x) * (port.getX() - x) + (port.getY() - y) * (port.getY() - y)));
-	}
-
-	public static void switchToMode(ToolMode newMode) {
-		instance.canvas.switchMode(instance.currentMode, newMode);
-		instance.currentMode = newMode;
 	}
 
 	public static URL getResource(String name) {

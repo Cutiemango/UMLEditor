@@ -17,11 +17,11 @@ public class CreateLineMode extends ToolMode
 	@Override
 	public void mousePressed(MouseEvent e) {
 		System.out.println("CreateLineMode: mousePressed");
-		UMLEditor.findPort(e.getX(), e.getY()).ifPresent(port -> {
+		UMLEditor.getCanvas().findPort(e.getX(), e.getY()).ifPresent(port -> {
 			LineObject line = objRef.createObject(port.getX(), port.getY(), e.getX(), e.getY());
 			line.getTail().connect(port);
-			UMLEditor.addObject(line);
-			UMLEditor.setSelectedObject(line);
+			UMLEditor.getCanvas().addObject(line);
+			UMLEditor.getCanvas().setSelectedObject(line);
 		});
 		UMLEditor.getCanvas().repaint();
 	}
@@ -29,13 +29,13 @@ public class CreateLineMode extends ToolMode
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("CreateLineMode: mouseReleased");
-		UMLEditor.getSelectedObject().filter(o -> o instanceof LineObject).ifPresent(o -> {
+		UMLEditor.getCanvas().getSelectedObject().filter(o -> o instanceof LineObject).ifPresent(o -> {
 			LineObject line = (LineObject) o;
-			UMLEditor.findPort(e.getX(), e.getY())
+			UMLEditor.getCanvas().findPort(e.getX(), e.getY())
 					 .filter(port -> line.getTail().getConnectedObject() != port.getParent())
 					 .ifPresentOrElse(port -> line.getHead().connect(port), () -> {
-						 UMLEditor.removeObject(line);
-						 UMLEditor.resetSelection();
+						 UMLEditor.getCanvas().removeObject(line);
+						 UMLEditor.getCanvas().resetSelection();
 					 });
 		});
 		UMLEditor.getCanvas().repaint();
@@ -43,7 +43,7 @@ public class CreateLineMode extends ToolMode
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		UMLEditor.getSelectedObject().filter(o -> o instanceof LineObject).ifPresent(o -> {
+		UMLEditor.getCanvas().getSelectedObject().filter(o -> o instanceof LineObject).ifPresent(o -> {
 			LineObject line = (LineObject) o;
 			line.getHead().moveTo(e.getX(), e.getY());
 		});

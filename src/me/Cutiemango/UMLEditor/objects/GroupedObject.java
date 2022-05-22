@@ -27,7 +27,7 @@ public class GroupedObject extends BasicObject
 		for (BasicObject object : objects) {
 			object.setGrouped(false);
 		}
-		UMLEditor.removeObject(this);
+		UMLEditor.getCanvas().removeObject(this);
 	}
 
 	@Override

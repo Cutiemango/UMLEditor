@@ -1,7 +1,6 @@
 package me.Cutiemango.UMLEditor.objects.basic;
 
 import me.Cutiemango.UMLEditor.objects.BaseObject;
-import me.Cutiemango.UMLEditor.objects.GroupedObject;
 import me.Cutiemango.UMLEditor.objects.Port;
 
 import java.awt.Graphics;

@@ -21,7 +21,7 @@ public class CreateObjectMode extends ToolMode
 		System.out.println("CreateObjectMode: mousePressed");
 
 		BasicObject obj = objRef.createObject(e.getX(), e.getY());
-		UMLEditor.addObject(obj);
+		UMLEditor.getCanvas().addObject(obj);
 		UMLEditor.getCanvas().repaint();
 	}
 }

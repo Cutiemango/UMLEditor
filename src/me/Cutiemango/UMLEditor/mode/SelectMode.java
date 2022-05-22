@@ -22,7 +22,7 @@ public class SelectMode extends ToolMode
 		UMLEditor.getCanvas().setShowArea(false);
 
 		// find the last (topmost) element under the mouse and select it
-		UMLEditor.getObjects().stream().filter(obj -> obj.includesPoint(e.getX(), e.getY()))
+		UMLEditor.getCanvas().getObjects().stream().filter(obj -> obj.includesPoint(e.getX(), e.getY()))
 				 .reduce((first, second) -> second).ifPresentOrElse(obj -> {
 					 if (obj instanceof LineObject line) {
 						 line.setSelectingTail(line.getTail().includePoint(e.getX(), e.getY()));
@@ -34,9 +34,9 @@ public class SelectMode extends ToolMode
 					 }
 					 dragOffsetX = e.getX() - dragStartX;
 					 dragOffsetY = e.getY() - dragStartY;
-					 UMLEditor.setSelectedObject(obj);
+					 UMLEditor.getCanvas().setSelectedObject(obj);
 				 }, () -> {
-					 UMLEditor.resetSelection();
+					 UMLEditor.getCanvas().resetSelection();
 					 dragStartX = e.getX();
 					 dragStartY = e.getY();
 				 });
@@ -47,9 +47,9 @@ public class SelectMode extends ToolMode
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("SelectMode: mouseReleased");
-		UMLEditor.getSelectedObject().filter(obj -> obj instanceof LineObject).ifPresent(obj -> {
+		UMLEditor.getCanvas().getSelectedObject().filter(obj -> obj instanceof LineObject).ifPresent(obj -> {
 			LineObject line = (LineObject) obj;
-			UMLEditor.findPort(e.getX(), e.getY())
+			UMLEditor.getCanvas().findPort(e.getX(), e.getY())
 					 .filter(port -> line.getOtherPort().getConnectedObject() != port.getParent())
 					 .ifPresentOrElse(port -> line.getSelectingPort().connect(port), () -> {
 						 System.out.println("SelectMode: mouseReleased: no port found");
@@ -62,7 +62,7 @@ public class SelectMode extends ToolMode
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		UMLEditor.getSelectedObject()
+		UMLEditor.getCanvas().getSelectedObject()
 				 .ifPresentOrElse(obj -> obj.moveTo(e.getX() - dragOffsetX, e.getY() - dragOffsetY), () -> {
 					 int x = Math.min(e.getX(), dragStartX);
 					 int y = Math.min(e.getY(), dragStartY);
@@ -72,7 +72,7 @@ public class SelectMode extends ToolMode
 						 UMLEditor.getCanvas().setShowArea(true);
 						 UMLEditor.getCanvas().setSelectedArea(x, y, width, height);
 
-						 UMLEditor.resetSelection();
+						 UMLEditor.getCanvas().resetSelection();
 						 UMLEditor.getCanvas().getObjectsInArea().forEach(obj -> obj.setSelected(true));
 					 }
 				 });

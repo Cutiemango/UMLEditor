@@ -41,7 +41,7 @@ public class UMLMenuBar
 	}
 
 	private void handleChangeObjectName() {
-		UMLEditor.getSelectedObject().filter(o -> o instanceof BasicObject).ifPresentOrElse(o -> {
+		UMLEditor.getCanvas().getSelectedObject().filter(o -> o instanceof BasicObject).ifPresentOrElse(o -> {
 			BasicObject obj = (BasicObject) o;
 			String name = JOptionPane.showInputDialog("Enter new object name", obj.getObjectName());
 			if (name != null) {
@@ -77,18 +77,19 @@ public class UMLMenuBar
 
 		GroupedObject groupedObject = new GroupedObject(upperLeft.x, upperLeft.y, lowerRight.x - upperLeft.x,
 														lowerRight.y - upperLeft.y, objects);
-		UMLEditor.addObject(groupedObject);
-		UMLEditor.resetSelection();
-		UMLEditor.setSelectedObject(groupedObject);
+
+		UMLEditor.getCanvas().addObject(groupedObject);
+		UMLEditor.getCanvas().resetSelection();
+		UMLEditor.getCanvas().setSelectedObject(groupedObject);
 		UMLEditor.getCanvas().setShowArea(false);
 		UMLEditor.getCanvas().repaint();
 	}
 
 	private void ungroupObject() {
-		UMLEditor.getSelectedObject().filter(o -> o instanceof GroupedObject).ifPresentOrElse(o -> {
+		UMLEditor.getCanvas().getSelectedObject().filter(o -> o instanceof GroupedObject).ifPresentOrElse(o -> {
 			GroupedObject groupedObject = (GroupedObject) o;
 			groupedObject.ungroup();
-			UMLEditor.resetSelection();
+			UMLEditor.getCanvas().resetSelection();
 			UMLEditor.getCanvas().setShowArea(false);
 			UMLEditor.getCanvas().repaint();
 		}, () -> JOptionPane.showMessageDialog(null,
