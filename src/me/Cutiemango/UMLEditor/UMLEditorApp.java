@@ -4,6 +4,6 @@ public class UMLEditorApp
 {
 	public static void main(String[] args) {
 		UMLEditor editor = UMLEditor.getInstance();
-		editor.start();
+		editor.launch();
 	}
 }

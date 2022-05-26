@@ -3,32 +3,23 @@ package me.Cutiemango.UMLEditor;
 import me.Cutiemango.UMLEditor.components.UMLCanvas;
 import me.Cutiemango.UMLEditor.components.UMLMenuBar;
 import me.Cutiemango.UMLEditor.components.UMLToolBar;
-import me.Cutiemango.UMLEditor.mode.ToolMode;
-import me.Cutiemango.UMLEditor.objects.BaseObject;
-import me.Cutiemango.UMLEditor.objects.Port;
-import me.Cutiemango.UMLEditor.objects.basic.BasicObject;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 
 public class UMLEditor
 {
 	private UMLEditor() {}
 
-	private static final UMLEditor instance = new UMLEditor();
+	private static UMLEditor instance;
 
 	private final JFrame app = new JFrame();
 	private final UMLCanvas canvas = new UMLCanvas();
 	private final UMLMenuBar menuBar = new UMLMenuBar();
 	private final UMLToolBar toolBar = new UMLToolBar();
 
-	public void start() {
+	public void launch() {
 		app.setLayout(new BorderLayout());
 		app.add(menuBar.getMenuBar(), BorderLayout.NORTH);
 		app.add(toolBar.getToolBar(), BorderLayout.WEST);
@@ -41,6 +32,9 @@ public class UMLEditor
 	}
 
 	public static UMLEditor getInstance() {
+		if (instance == null) {
+			instance = new UMLEditor();
+		}
 		return instance;
 	}
 
